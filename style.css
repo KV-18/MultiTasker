@@ -1,0 +1,1001 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base body */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0e1016;
+  color: #dddbd6;
+  font-size: 14px;
+}
+
+/* Full-height flex layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* User select screen covers full viewport */
+#user-screen {
+  position: fixed;
+  inset: 0;
+  background: #0e1016;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* App logo title on user screen */
+.us-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  color: #5b8dee;
+  margin-bottom: 6px;
+}
+
+/* Subtitle under logo */
+.us-sub {
+  color: #555868;
+  font-size: 0.85rem;
+  margin-bottom: 36px;
+}
+
+/* Grid of user cards */
+.us-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  max-width: 520px;
+}
+
+/* Individual user card */
+.us-card {
+  background: #161820;
+  border: 1px solid #252731;
+  border-radius: 12px;
+  padding: 18px 22px;
+  width: 140px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+/* Lift card on hover */
+.us-card:hover {
+  border-color: #5b8dee;
+  transform: translateY(-2px);
+}
+
+/* Circular avatar with initials */
+.us-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Username label under avatar */
+.us-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #dddbd6;
+}
+
+/* Dashed border for the "add new user" card */
+.us-add {
+  border: 1.5px dashed #252731;
+  color: #555868;
+}
+
+.us-add:hover {
+  border-color: #5b8dee;
+  color: #5b8dee;
+}
+
+/* Dashed avatar circle for new user */
+.us-add .us-avatar {
+  background: transparent;
+  border: 2px dashed #555868;
+  color: #555868;
+  font-size: 1.4rem;
+}
+
+.us-add:hover .us-avatar {
+  border-color: #5b8dee;
+  color: #5b8dee;
+}
+
+/* New user form hidden by default */
+.us-new-form {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Name input in new user form */
+.us-new-form input {
+  background: #161820;
+  border: 1px solid #252731;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: #dddbd6;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  width: 220px;
+  outline: none;
+}
+
+.us-new-form input:focus {
+  border-color: #5b8dee;
+}
+
+/* Create profile button */
+.us-new-form button {
+  background: #5b8dee;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.83rem;
+}
+
+/* Row of color picker dots */
+.us-color-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* Single color dot in the picker */
+.us-color-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s;
+}
+
+/* White ring shows selected color */
+.us-color-dot.selected {
+  border-color: #fff;
+}
+
+/* Sidebar panel */
+#sidebar {
+  width: 210px;
+  background-color: #161820;
+  border-right: 1px solid #252731;
+  padding: 22px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App brand row */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+}
+
+/* Diamond logo icon */
+.logo {
+  font-size: 1.2rem;
+  color: #5b8dee;
+}
+
+/* App name text */
+.brand-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #dddbd6;
+}
+
+/* Active user badge in sidebar */
+.current-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 22px;
+  background: #1b2540;
+  border-radius: 8px;
+  padding: 6px 9px;
+  cursor: pointer;
+}
+
+/* Colored dot next to username */
+.cu-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Current user name text */
+.cu-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #5b8dee;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Switch user icon */
+.cu-switch {
+  font-size: 0.65rem;
+  color: #555868;
+}
+
+.cu-switch:hover {
+  color: #5b8dee;
+}
+
+/* Section labels like "VIEWS", "CATEGORY" */
+.nav-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555868;
+  margin-bottom: 5px;
+}
+
+/* Remove default list bullets */
+ul {
+  list-style: none;
+}
+
+/* Sidebar nav item */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #555868;
+  font-size: 0.85rem;
+  margin-bottom: 2px;
+}
+
+/* Icon inside nav item */
+.nav-item i {
+  font-size: 0.78rem;
+  width: 13px;
+  text-align: center;
+}
+
+/* Hover state */
+.nav-item:hover {
+  background-color: #1e2030;
+  color: #dddbd6;
+}
+
+/* Active selected nav item */
+.nav-item.active {
+  background-color: #1b2540;
+  color: #5b8dee;
+  font-weight: 600;
+}
+
+/* Badge turns blue when nav item is active */
+.nav-item.active .badge {
+  background-color: #5b8dee;
+  color: #fff;
+}
+
+/* Count badge on nav items */
+.badge {
+  margin-left: auto;
+  background-color: #252731;
+  color: #555868;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 0.67rem;
+  font-weight: 600;
+}
+
+/* Small colored dot for category indicators */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Category dot colors */
+.dot-work     { background-color: #5b8dee; }
+.dot-study    { background-color: #a78bfa; }
+.dot-personal { background-color: #34d399; }
+
+/* Progress section pushed to bottom of sidebar */
+.progress-section {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #252731;
+}
+
+/* Progress section heading */
+.progress-label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #555868;
+  margin-bottom: 12px;
+}
+
+/* Wrapper centers the ring and numbers */
+.progress-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Rotate SVG so arc starts at top */
+.prog-svg {
+  transform: rotate(-90deg);
+}
+
+/* Background track of the ring */
+.prog-bg {
+  fill: none;
+  stroke: #252731;
+  stroke-width: 6;
+}
+
+/* Animated fill arc of the ring */
+.prog-fill {
+  fill: none;
+  stroke: #5b8dee;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Done/total labels row */
+.prog-numbers {
+  display: flex;
+  gap: 14px;
+  font-size: 0.72rem;
+  color: #555868;
+}
+
+/* Each number + label pair */
+.prog-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The number itself */
+.prog-num span:first-child {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #dddbd6;
+}
+
+/* Percentage text centered inside the ring */
+.prog-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #5b8dee;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Relative container for ring + centered text overlay */
+.prog-ring-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main content area */
+#main {
+  flex: 1;
+  padding: 26px 28px;
+  overflow-x: auto;
+}
+
+/* Top bar with title and controls */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* Page title (e.g. "All Tasks") */
+.topbar h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Search and new-task button group */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Search input pill */
+.search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background-color: #161820;
+  border: 1px solid #252731;
+  border-radius: 18px;
+  padding: 6px 13px;
+}
+
+/* Search icon */
+.search-wrap i {
+  color: #555868;
+  font-size: 0.75rem;
+}
+
+/* Search text input */
+.search-wrap input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  color: #dddbd6;
+  width: 140px;
+}
+
+/* New task button */
+#btn-new {
+  background-color: #5b8dee;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 7px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#btn-new:hover {
+  background-color: #4a7de0;
+}
+
+/* Sort controls bar */
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+/* "Sort:" label */
+.sort-label {
+  font-size: 0.75rem;
+  color: #555868;
+}
+
+/* Individual sort button */
+.sort-btn {
+  background-color: transparent;
+  border: 1px solid #252731;
+  border-radius: 12px;
+  padding: 3px 11px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.73rem;
+  color: #555868;
+  cursor: pointer;
+}
+
+.sort-btn:hover {
+  color: #dddbd6;
+  border-color: #555868;
+}
+
+/* Active sort button */
+.sort-btn.active {
+  background-color: #161820;
+  color: #dddbd6;
+  border-color: #555868;
+  font-weight: 600;
+}
+
+/* Total task count label */
+#task-count {
+  margin-left: auto;
+  font-size: 0.73rem;
+  color: #555868;
+}
+
+/* Three-column kanban grid */
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* Single column card */
+.col {
+  background-color: #161820;
+  border: 1px solid #252731;
+  border-radius: 8px;
+  padding: 14px;
+  min-height: 150px;
+}
+
+/* Column header row */
+.col-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+/* Column name text */
+.col-head b {
+  font-size: 0.83rem;
+  flex: 1;
+}
+
+/* Status dot in column header */
+.col-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Column status dot colors */
+.col-dot.todo  { background-color: #555868; }
+.col-dot.inprog { background-color: #f59e0b; }
+.col-dot.done  { background-color: #34d399; }
+
+/* Task count badge in column header */
+.col-count {
+  background-color: #252731;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.68rem;
+  color: #555868;
+  font-weight: 600;
+}
+
+/* Drop zone for dragged cards */
+.task-list {
+  min-height: 30px;
+}
+
+/* Highlight column when dragging over it */
+.task-list.over {
+  background-color: #1b2540;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+/* Task card */
+.card {
+  background-color: #0e1016;
+  border: 1px solid #252731;
+  border-left: 3px solid #555868;
+  border-radius: 7px;
+  padding: 10px 11px;
+  margin-bottom: 8px;
+  cursor: grab;
+  position: relative;
+}
+
+/* Left border color by category */
+.card[data-cat="work"]     { border-left-color: #5b8dee; }
+.card[data-cat="study"]    { border-left-color: #a78bfa; }
+.card[data-cat="personal"] { border-left-color: #34d399; }
+
+/* Blue border on hover */
+.card:hover {
+  border-color: #5b8dee;
+}
+
+/* Fade out completed cards */
+.card.done-card {
+  opacity: 0.5;
+}
+
+/* Top row of card: checkbox, title, action buttons */
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Circular checkbox */
+.check {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #252731;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+  font-size: 0.55rem;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  line-height: 11px;
+}
+
+/* Green filled checkbox when done */
+.check.on {
+  background-color: #34d399;
+  border-color: #34d399;
+}
+
+/* Task title text */
+.card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Strikethrough title for completed tasks */
+.done-card .card-title {
+  text-decoration: line-through;
+}
+
+/* Edit and delete buttons */
+.card-acts {
+  display: flex;
+  gap: 2px;
+}
+
+/* Icon action button */
+.act-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555868;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.act-btn:hover {
+  background-color: #252731;
+  color: #dddbd6;
+}
+
+/* Delete button turns red on hover */
+.act-btn.del:hover {
+  color: #f87171;
+}
+
+/* Optional notes below title */
+.card-notes {
+  font-size: 0.73rem;
+  color: #555868;
+  line-height: 1.4;
+  margin: 5px 0;
+}
+
+/* Row of chips at the bottom of the card */
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 7px;
+  flex-wrap: wrap;
+}
+
+/* Base chip style */
+.chip {
+  font-size: 0.64rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Category chip colors */
+.ch-work     { background-color: #162040; color: #5b8dee; }
+.ch-study    { background-color: #1e1540; color: #a78bfa; }
+.ch-personal { background-color: #0d2e20; color: #34d399; }
+
+/* Priority chip colors */
+.pr-low    { background-color: #0d2e20; color: #34d399; }
+.pr-medium { background-color: #2a2008; color: #f59e0b; }
+.pr-high   { background-color: #2e0e0e; color: #f87171; }
+
+/* Deadline label aligned to the right */
+.dl-chip {
+  font-size: 0.67rem;
+  color: #555868;
+  margin-left: auto;
+}
+
+/* Overdue deadline in red */
+.dl-chip.overdue { color: #f87171; font-weight: 600; }
+
+/* Due today in amber */
+.dl-chip.today   { color: #f59e0b; font-weight: 600; }
+
+/* Empty state when no tasks match */
+#empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #555868;
+}
+
+#empty p {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+}
+
+/* Add one button in empty state */
+#empty button {
+  background-color: #5b8dee;
+  color: #fff;
+  border: none;
+  border-radius: 18px;
+  padding: 8px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  cursor: pointer;
+}
+
+/* Modal backdrop */
+#modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Show modal when open class is added */
+#modal-overlay.open {
+  display: flex;
+}
+
+/* Modal dialog box */
+#modal {
+  background-color: #161820;
+  border: 1px solid #252731;
+  border-radius: 11px;
+  width: 90%;
+  max-width: 440px;
+}
+
+/* Modal header row */
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #252731;
+}
+
+/* Modal title text */
+.modal-head h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Close X button */
+#btn-close {
+  background-color: #252731;
+  border: none;
+  border-radius: 5px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  color: #555868;
+  font-size: 0.85rem;
+}
+
+#btn-close:hover {
+  color: #dddbd6;
+}
+
+/* Modal body padding */
+.modal-body {
+  padding: 14px 18px;
+}
+
+/* Form field labels */
+.modal-body label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #555868;
+  margin-bottom: 4px;
+  margin-top: 10px;
+}
+
+.modal-body label:first-child {
+  margin-top: 0;
+}
+
+/* Shared input, textarea, select styles */
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  width: 100%;
+  background-color: #0e1016;
+  border: 1px solid #252731;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  color: #dddbd6;
+  outline: none;
+}
+
+/* Prevent textarea resize */
+.modal-body textarea {
+  resize: none;
+}
+
+/* Blue border on focus */
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+  border-color: #5b8dee;
+}
+
+/* Two-column row for category and priority */
+.row2 {
+  display: flex;
+  gap: 10px;
+}
+
+.row2 div {
+  flex: 1;
+}
+
+/* Status button group */
+#status-btns {
+  display: flex;
+  gap: 6px;
+}
+
+/* Individual status button */
+.sbtn {
+  flex: 1;
+  background-color: #0e1016;
+  border: 1px solid #252731;
+  border-radius: 6px;
+  padding: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #555868;
+  cursor: pointer;
+}
+
+.sbtn:hover {
+  color: #dddbd6;
+  border-color: #555868;
+}
+
+/* Active status button */
+.sbtn.active {
+  background-color: #5b8dee;
+  border-color: #5b8dee;
+  color: #fff;
+}
+
+/* Modal footer row */
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid #252731;
+}
+
+/* Cancel button */
+#btn-cancel {
+  background: none;
+  border: 1px solid #252731;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  color: #555868;
+  cursor: pointer;
+}
+
+#btn-cancel:hover {
+  color: #dddbd6;
+}
+
+/* Save button */
+#btn-save {
+  background-color: #5b8dee;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+}
+
+#btn-save:hover {
+  background-color: #4a7de0;
+}
+
+/* Toast notification */
+#toast {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  background-color: #161820;
+  border: 1px solid #252731;
+  color: #dddbd6;
+  border-radius: 7px;
+  padding: 9px 14px;
+  font-size: 0.8rem;
+  z-index: 200;
+  display: none;
+  gap: 7px;
+  align-items: center;
+}
+
+/* Show toast */
+#toast.show {
+  display: flex;
+}
+
+/* Bell icon inside toast */
+#toast i {
+  color: #f59e0b;
+}
+
+/* Thin custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background-color: #252731; border-radius: 4px; }
+
+/* Stack columns on medium screens */
+@media (max-width: 820px) {
+  #board { grid-template-columns: 1fr; }
+}
+
+/* Stack sidebar on small screens */
+@media (max-width: 600px) {
+  .layout { display: block; }
+  #sidebar { width: 100%; height: auto; }
+}

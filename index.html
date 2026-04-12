@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MultiTasker</title>
+  <!-- App styles -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google fonts: Syne for headings, Inter for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- User selection screen shown on first load -->
+  <div id="user-screen">
+    <div class="us-title">&#9670; MultiTasker</div>
+    <div class="us-sub">Who's working today?</div>
+    <!-- User cards injected here by JS -->
+    <div class="us-grid" id="us-grid"></div>
+    <!-- New user creation form, hidden by default -->
+    <div class="us-new-form" id="us-new-form">
+      <input type="text" id="us-new-name" placeholder="Enter your name..." maxlength="20" />
+      <!-- Color picker dots injected here by JS -->
+      <div class="us-color-row" id="us-color-row"></div>
+      <button onclick="createUser()">Create Profile</button>
+    </div>
+  </div>
+
+  <!-- Main app layout, hidden until a user is selected -->
+  <div class="layout" id="app-layout" style="display:none;">
+
+    <!-- Left sidebar -->
+    <aside id="sidebar">
+
+      <!-- App brand -->
+      <header class="brand">
+        <span class="logo">&#9670;</span>
+        <span class="brand-name">MultiTasker</span>
+      </header>
+
+      <!-- Active user badge, click to switch user -->
+      <div class="current-user-badge" onclick="switchUser()" title="Switch user">
+        <div class="cu-dot" id="cu-dot"></div>
+        <span class="cu-name" id="cu-name">—</span>
+        <span class="cu-switch"><i class="fa fa-right-left"></i></span>
+      </div>
+
+      <!-- Navigation filters -->
+      <nav>
+        <p class="nav-label">Views</p>
+        <ul id="nav-list">
+          <!-- All tasks view -->
+          <li class="nav-item active" data-filter="all">
+            <i class="fa fa-list"></i> All
+            <span class="badge" id="badge-all">0</span>
+          </li>
+          <!-- Tasks due today -->
+          <li class="nav-item" data-filter="today">
+            <i class="fa fa-calendar-day"></i> Today
+            <span class="badge" id="badge-today">0</span>
+          </li>
+          <!-- Completed tasks -->
+          <li class="nav-item" data-filter="done">
+            <i class="fa fa-check-circle"></i> Done
+            <span class="badge" id="badge-done">0</span>
+          </li>
+        </ul>
+
+        <p class="nav-label" style="margin-top:20px;">Category</p>
+        <ul>
+          <!-- Work category filter -->
+          <li class="nav-item" data-filter="work">
+            <span class="dot dot-work"></span> Work
+            <span class="badge" id="badge-work">0</span>
+          </li>
+          <!-- Study category filter -->
+          <li class="nav-item" data-filter="study">
+            <span class="dot dot-study"></span> Study
+            <span class="badge" id="badge-study">0</span>
+          </li>
+          <!-- Personal category filter -->
+          <li class="nav-item" data-filter="personal">
+            <span class="dot dot-personal"></span> Personal
+            <span class="badge" id="badge-personal">0</span>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Progress ring at the bottom of the sidebar -->
+      <div class="progress-section">
+        <p class="progress-label">Progress</p>
+        <div class="progress-ring-wrap">
+          <div class="prog-ring-container">
+            <!-- SVG ring: prog-bg is the track, prog-fill is the animated arc -->
+            <svg class="prog-svg" width="80" height="80" viewBox="0 0 80 80">
+              <circle class="prog-bg" cx="40" cy="40" r="34" />
+              <circle class="prog-fill" id="prog-fill" cx="40" cy="40" r="34"
+                stroke-dasharray="213.6" stroke-dashoffset="213.6" />
+            </svg>
+            <!-- Percentage label centered over the ring -->
+            <span class="prog-pct" id="prog-pct">0%</span>
+          </div>
+          <!-- Done and total counts below the ring -->
+          <div class="prog-numbers">
+            <div class="prog-num"><span id="prog-done-n">0</span><span>done</span></div>
+            <div class="prog-num"><span id="prog-total-n">0</span><span>total</span></div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Main content panel -->
+    <main id="main">
+
+      <!-- Top bar: page title, search, new task button -->
+      <header class="topbar">
+        <h1 id="page-title">All Tasks</h1>
+        <div class="topbar-right">
+          <div class="search-wrap">
+            <i class="fa fa-search"></i>
+            <input type="text" id="search" placeholder="Search..." />
+          </div>
+          <button id="btn-new" onclick="openModal()">+ New Task</button>
+        </div>
+      </header>
+
+      <!-- Sort controls and task count -->
+      <div class="sort-bar">
+        <span class="sort-label">Sort:</span>
+        <button class="sort-btn active" data-sort="date">Date</button>
+        <button class="sort-btn" data-sort="priority">Priority</button>
+        <button class="sort-btn" data-sort="deadline">Deadline</button>
+        <span id="task-count"></span>
+      </div>
+
+      <!-- Kanban board with three columns -->
+      <section id="board">
+
+        <!-- To Do column -->
+        <article class="col" id="col-todo">
+          <div class="col-head">
+            <span class="col-dot todo"></span>
+            <b>To Do</b>
+            <span class="col-count" id="cnt-todo">0</span>
+          </div>
+          <!-- Cards injected here by JS -->
+          <div class="task-list" id="list-todo" data-status="todo"></div>
+        </article>
+
+        <!-- In Progress column -->
+        <article class="col" id="col-inprogress">
+          <div class="col-head">
+            <span class="col-dot inprog"></span>
+            <b>In Progress</b>
+            <span class="col-count" id="cnt-inprogress">0</span>
+          </div>
+          <div class="task-list" id="list-inprogress" data-status="inprogress"></div>
+        </article>
+
+        <!-- Done column -->
+        <article class="col" id="col-done">
+          <div class="col-head">
+            <span class="col-dot done"></span>
+            <b>Done</b>
+            <span class="col-count" id="cnt-done">0</span>
+          </div>
+          <div class="task-list" id="list-done" data-status="done"></div>
+        </article>
+
+      </section>
+
+      <!-- Empty state shown when no tasks exist or match the filter -->
+      <div id="empty" style="display:none;">
+        <p>&#128193; No tasks yet.</p>
+        <button onclick="openModal()">+ Add one</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Add / edit task modal -->
+  <div id="modal-overlay">
+    <div id="modal">
+
+      <!-- Modal header -->
+      <div class="modal-head">
+        <h2 id="modal-title">New Task</h2>
+        <button id="btn-close" onclick="closeModal()">&#10005;</button>
+      </div>
+
+      <!-- Modal form fields -->
+      <div class="modal-body">
+        <!-- Task title (required) -->
+        <label>Title *</label>
+        <input type="text" id="f-title" placeholder="What needs to be done?" maxlength="80" />
+
+        <!-- Optional notes -->
+        <label>Notes</label>
+        <textarea id="f-notes" rows="2" placeholder="Details..."></textarea>
+
+        <!-- Category and priority dropdowns side by side -->
+        <div class="row2">
+          <div>
+            <label>Category</label>
+            <select id="f-cat" onchange="onCatChange()">
+              <option value="work">Work</option>
+              <option value="study">Study</option>
+              <option value="personal">Personal</option>
+            </select>
+          </div>
+          <div>
+            <label>Priority</label>
+            <select id="f-pri">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Optional deadline datetime -->
+        <label>Deadline</label>
+        <input type="datetime-local" id="f-deadline" />
+
+        <!-- Status toggle: one button active at a time -->
+        <label>Status</label>
+        <div id="status-btns">
+          <button class="sbtn active" data-s="todo">To Do</button>
+          <button class="sbtn" data-s="inprogress">In Progress</button>
+          <button class="sbtn" data-s="done">Done</button>
+        </div>
+      </div>
+
+      <!-- Modal footer with cancel and save -->
+      <div class="modal-foot">
+        <button id="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button id="btn-save" onclick="saveTask()">Save</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast">
+    <i class="fa fa-bell"></i>
+    <span id="toast-msg"></span>
+  </div>
+
+  <!-- App logic -->
+  <script src="app.js"></script>
+
+</body>
+</html>
